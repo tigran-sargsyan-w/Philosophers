@@ -1,0 +1,9 @@
+{
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/t_sargsyan/Github/Philosophers",
+            "binaryPath": "/home/t_sargsyan/Github/Philosophers/philo",
+            "binaryArgs": []
+        }
+    ]
+}
