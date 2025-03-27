@@ -7,7 +7,7 @@ NAME        = philo
 # -------------------------------
 #   Compiler and Flags
 # -------------------------------
-CC          = cc
+CC          = cc -pthread
 C_FLAGS     = -Wall -Wextra -Werror -g
 INC_FLAGS   = -I$(INC_DIR)
 
