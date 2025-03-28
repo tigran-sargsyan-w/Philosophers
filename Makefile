@@ -21,7 +21,9 @@ OBJ_DIR     = obj
 # -------------------------------
 #   All Source Files 
 # -------------------------------
-SRCS        = $(SRC_DIR)/main.c
+SRCS        = $(SRC_DIR)/main.c \
+			$(SRC_DIR)/exit_utils.c \
+			$(SRC_DIR)/parsing.c
 
 # -------------------------------
 #   Header Files
