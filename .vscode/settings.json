@@ -3,7 +3,7 @@
         {
             "cwd": "/home/t_sargsyan/Github/Philosophers",
             "binaryPath": "/home/t_sargsyan/Github/Philosophers/philo",
-            "binaryArgs": []
+            "binaryArgs": ["2 200 300 400 5"]
         }
     ]
 }
