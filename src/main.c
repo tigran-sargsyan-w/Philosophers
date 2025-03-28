@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:31:48 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/03/28 20:13:18 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/03/28 23:00:31 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,26 @@ void	init_rules(int argc, char **argv, t_vars *vars)
 	}
 }
 
+void	init_mutexes(t_vars *vars)
+{
+	int	i;
+
+	vars->forks = malloc(sizeof(pthread_mutex_t) * vars->rules.philo_count);
+	if (!vars->forks)
+		cleanup_and_error_exit(vars, "malloc: forks");
+	i = 0;
+	while (i < vars->rules.philo_count)
+	{
+		if (pthread_mutex_init(&vars->forks[i], NULL) != 0)
+			cleanup_and_error_exit(vars, "pthread_mutex_init: fork");
+		i++;
+	}
+	if (pthread_mutex_init(&vars->print_lock, NULL) != 0)
+		cleanup_and_error_exit(vars, "pthread_mutex_init: print_lock");
+	if (pthread_mutex_init(&vars->simulation_lock, NULL) != 0)
+		cleanup_and_error_exit(vars, "pthread_mutex_init: simulation_lock");
+}
+
 int	main(int argc, char **argv)
 {
 	t_vars	vars;
@@ -50,5 +70,8 @@ int	main(int argc, char **argv)
 	printf("Time to eat: %d\n", vars.rules.time_to_eat);
 	printf("Time to sleep: %d\n", vars.rules.time_to_sleep);
 	printf("Must eat count: %d\n", vars.rules.must_eat_count);
+	printf("Forks: %p\n", vars.forks);
+	init_mutexes(&vars);
+	printf("Forks: %p\n", vars.forks);
 	return (0);
 }
