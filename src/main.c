@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:31:48 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/03/28 23:00:31 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/03/29 14:10:04 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,16 @@ void	init_mutexes(t_vars *vars)
 int	main(int argc, char **argv)
 {
 	t_vars	vars;
+	int		i;
 
+	printf("argc: %d\n", argc);
+	i = 0;
+	while (i < argc)
+	{
+		printf("argv[%d]: %s\n", i, argv[i]);
+		i++;
+	}
 	init_rules(argc, argv, &vars);
-	printf("Philosopher count: %d\n", vars.rules.philo_count);
-	printf("Time to die: %d\n", vars.rules.time_to_die);
-	printf("Time to eat: %d\n", vars.rules.time_to_eat);
-	printf("Time to sleep: %d\n", vars.rules.time_to_sleep);
-	printf("Must eat count: %d\n", vars.rules.must_eat_count);
-	printf("Forks: %p\n", vars.forks);
 	init_mutexes(&vars);
 	printf("Forks: %p\n", vars.forks);
 	return (0);
