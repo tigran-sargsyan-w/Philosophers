@@ -3,7 +3,14 @@
         {
             "cwd": "/home/t_sargsyan/Github/Philosophers",
             "binaryPath": "/home/t_sargsyan/Github/Philosophers/philo",
-            "binaryArgs": ["2 200 300 400 5"]
+            "binaryArgs": [
+                "2",
+                "200",
+                "300",
+                "400",
+                "5"
+            ]
         }
-    ]
+    ],
+    "makefile.loggingLevel": "Debug",
 }
