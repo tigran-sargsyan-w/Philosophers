@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:31:48 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/03/30 14:42:09 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/03/30 19:02:43 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,24 +114,28 @@ void	*philo_routine(void *arg)
 	while (1)
 	{
 		// Здесь позже будет проверка симуляции завершения (если кто-то умер)
-		// THINK
-		log_action(philo, "is thinking");
-		// TAKE FORKS
+		// 1. TAKE FORKS
 		pthread_mutex_lock(philo->left_fork);
 		log_action(philo, "has taken a fork");
 		pthread_mutex_lock(philo->right_fork);
 		log_action(philo, "has taken a fork");
-		// EAT
+
+		// 2. EAT
 		log_action(philo, "is eating");
 		philo->last_meal = get_time_in_ms();
-		usleep(philo->vars->rules.time_to_eat * 1000);
 		philo->meals_eaten++;
-		// DROP FORKS
+		usleep(philo->vars->rules.time_to_eat * 1000);
+
+		// 3. DROP FORKS
 		pthread_mutex_unlock(philo->left_fork);
 		pthread_mutex_unlock(philo->right_fork);
-		// SLEEP
+
+		// 4. SLEEP
 		log_action(philo, "is sleeping");
 		usleep(philo->vars->rules.time_to_sleep * 1000);
+
+		// 5. THINK
+		log_action(philo, "is thinking");
 	}
 	return (NULL);
 }
