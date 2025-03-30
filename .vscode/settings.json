@@ -1,15 +1,35 @@
 {
     "makefile.launchConfigurations": [
         {
-            "cwd": "/home/t_sargsyan/Github/Philosophers",
-            "binaryPath": "/home/t_sargsyan/Github/Philosophers/philo",
+            "cwd": "${workspaceFolder}",
+            "binaryPath": "/usr/bin/valgrind",
             "binaryArgs": [
-                "2",
+                "--leak-check=full",
+                "--show-leak-kinds=all",
+                "--track-origins=yes",
+                "${workspaceFolder}/philo",
+                "5",
                 "200",
                 "300",
                 "400",
                 "5"
             ]
+        },
+        {
+            "cwd": "${workspaceFolder}",
+            "binaryPath": "${workspaceFolder}/philo",
+            "binaryArgs": [
+                "5",
+                "200",
+                "300",
+                "400",
+                "5"
+            ]
+        },
+        {
+            "cwd": "/home/t_sargsyan/Github/Philosophers",
+            "binaryPath": "/home/t_sargsyan/Github/Philosophers/philo",
+            "binaryArgs": []
         }
     ],
     "makefile.loggingLevel": "Debug",
