@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:33:00 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/03/28 15:31:33 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/03/29 18:30:18 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,6 @@ typedef struct s_philo
 int						try_parse_int(const char *str, int *out);
 void					cleanup_and_exit(t_vars *vars);
 void					cleanup_and_error_exit(t_vars *vars, char *msg);
+long					get_time_in_ms(void);
 
 #endif
