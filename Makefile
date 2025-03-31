@@ -23,6 +23,7 @@ OBJ_DIR     = obj
 # -------------------------------
 SRCS        = $(SRC_DIR)/main.c \
 			$(SRC_DIR)/exit_utils.c \
+			$(SRC_DIR)/monitoring.c \
 			$(SRC_DIR)/parsing.c \
 			$(SRC_DIR)/time.c
 

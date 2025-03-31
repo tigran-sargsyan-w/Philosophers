@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:33:00 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/03/29 18:30:18 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/03/30 19:38:31 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,8 @@ int						try_parse_int(const char *str, int *out);
 void					cleanup_and_exit(t_vars *vars);
 void					cleanup_and_error_exit(t_vars *vars, char *msg);
 long					get_time_in_ms(void);
+void					*monitor_routine(void *arg);
+void					log_action(t_philo *philo, const char *msg);
+int						is_simulation_ended(t_vars *vars);
 
 #endif

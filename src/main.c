@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:31:48 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/03/30 19:02:43 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/03/30 19:38:08 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,17 +108,31 @@ void	*philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	// Добавим лёгкую задержку для чётных философов (помогает избежать deadlock)
+
 	if (philo->id % 2 == 0)
 		usleep(1000);
-	while (1)
+
+	while (!is_simulation_ended(philo->vars))
 	{
-		// Здесь позже будет проверка симуляции завершения (если кто-то умер)
 		// 1. TAKE FORKS
 		pthread_mutex_lock(philo->left_fork);
 		log_action(philo, "has taken a fork");
+
+		if (is_simulation_ended(philo->vars)) // добавим и тут
+		{
+			pthread_mutex_unlock(philo->left_fork);
+			break;
+		}
+
 		pthread_mutex_lock(philo->right_fork);
 		log_action(philo, "has taken a fork");
+
+		if (is_simulation_ended(philo->vars))
+		{
+			pthread_mutex_unlock(philo->left_fork);
+			pthread_mutex_unlock(philo->right_fork);
+			break;
+		}
 
 		// 2. EAT
 		log_action(philo, "is eating");
@@ -131,17 +145,23 @@ void	*philo_routine(void *arg)
 		pthread_mutex_unlock(philo->right_fork);
 
 		// 4. SLEEP
+		if (is_simulation_ended(philo->vars))
+			break;
 		log_action(philo, "is sleeping");
 		usleep(philo->vars->rules.time_to_sleep * 1000);
 
 		// 5. THINK
+		if (is_simulation_ended(philo->vars))
+			break;
 		log_action(philo, "is thinking");
 	}
 	return (NULL);
 }
 
+
 void	start_simulation(t_vars *vars)
 {
+	pthread_t	monitor;
 	int	i;
 
 	vars->start_time = get_time_in_ms();
@@ -153,6 +173,15 @@ void	start_simulation(t_vars *vars)
 			cleanup_and_error_exit(vars, "pthread_create");
 		i++;
 	}
+
+	// Запускаем монитор
+	if (pthread_create(&monitor, NULL, &monitor_routine, vars) != 0)
+		cleanup_and_error_exit(vars, "pthread_create (monitor)");
+
+	// Ждём завершения потока-монитора
+	if (pthread_join(monitor, NULL) != 0)
+		cleanup_and_error_exit(vars, "pthread_join (monitor)");
+	
 	i = 0;
 	while (i < vars->rules.philo_count)
 	{
