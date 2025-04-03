@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 19:18:40 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/03/30 19:21:31 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:02:39 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,28 @@ void	set_simulation_end(t_vars *vars)
 
 void	*monitor_routine(void *arg)
 {
-	t_vars	*vars = (t_vars *)arg;
+	t_vars	*vars;
+	t_philo	*philo;
+	long	time_since_last_meal;
 	int		i;
 
+	vars = (t_vars *)arg;
 	while (!is_simulation_ended(vars))
 	{
 		i = 0;
 		while (i < vars->rules.philo_count)
 		{
-			t_philo *philo = &vars->philos[i];
-			long time_since_last_meal = get_time_in_ms() - philo->last_meal;
-
+			philo = &vars->philos[i];
+			time_since_last_meal = get_time_in_ms() - philo->last_meal;
 			if (time_since_last_meal > vars->rules.time_to_die)
 			{
 				set_simulation_end(vars);
-				// pthread_mutex_lock(&vars->print_lock);
-				// printf("%ld %d died\n",
-				// 	get_time_in_ms() - vars->start_time, philo->id);
-				// pthread_mutex_unlock(&vars->print_lock);
-                log_action(philo, "died");
+				log_action(philo, "died");
 				return (NULL);
 			}
 			i++;
 		}
-		usleep(1000); // частота опроса
+		usleep(500);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:33:00 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/03/30 19:38:31 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:06:12 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,13 @@ typedef struct s_philo
 }						t_philo;
 
 int						try_parse_int(const char *str, int *out);
+void					init_all(t_vars *vars, int argc, char **argv);
 void					cleanup_and_exit(t_vars *vars);
 void					cleanup_and_error_exit(t_vars *vars, char *msg);
 long					get_time_in_ms(void);
 void					*monitor_routine(void *arg);
 void					log_action(t_philo *philo, const char *msg);
 int						is_simulation_ended(t_vars *vars);
+void					smart_sleep(long duration, t_vars *vars);
 
 #endif
