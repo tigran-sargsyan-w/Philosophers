@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:31:48 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/03 16:09:12 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/03 16:30:25 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	start_simulation(t_vars *vars)
 	i = 0;
 	while (i < vars->rules.philo_count)
 	{
+		vars->philos[i].last_meal = vars->start_time;
 		if (pthread_create(&vars->philos[i].thread, NULL, &philo_routine,
 				&vars->philos[i]) != 0)
 			cleanup_and_error_exit(vars, "pthread_create");
