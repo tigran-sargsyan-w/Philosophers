@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:31:48 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/03 16:30:25 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/06 14:05:44 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	*philo_routine(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
-		usleep(1000);
+		smart_sleep(philo->vars->rules.time_to_eat / 10, philo->vars);
 	while (!is_simulation_ended(philo->vars))
 	{
 		// 1. TAKE FORKS
