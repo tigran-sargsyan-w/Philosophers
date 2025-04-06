@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:07:01 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/03 16:07:04 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/06 18:58:57 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,15 @@ void	init_philosophers(t_vars *vars)
 		vars->philos[i].last_meal = 0;
 		vars->philos[i].thread = 0;
 		vars->philos[i].left_fork = &vars->forks[i];
-		vars->philos[i].right_fork = &vars->forks[(i + 1)
-			% vars->rules.philo_count];
+		if (vars->rules.philo_count == 1)
+		{
+			vars->philos[i].right_fork = NULL;
+		}
+		else
+		{
+			vars->philos[i].right_fork = &vars->forks[(i + 1)
+				% vars->rules.philo_count];
+		}
 		vars->philos[i].vars = vars;
 		i++;
 	}

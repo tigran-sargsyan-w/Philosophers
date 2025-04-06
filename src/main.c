@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:31:48 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/06 14:05:44 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/06 18:56:15 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ void	*philo_routine(void *arg)
 		{
 			pthread_mutex_unlock(philo->left_fork);
 			break ;
+		}
+		if (!philo->right_fork)
+		{
+			smart_sleep(philo->vars->rules.time_to_die, philo->vars);
+			pthread_mutex_unlock(philo->left_fork);
+			return (NULL);
 		}
 		pthread_mutex_lock(philo->right_fork);
 		if (is_simulation_ended(philo->vars))
