@@ -17,7 +17,7 @@ examples:
 | ./philo 4 410 200 200 | nobody dies | + |
 | ./philo 4 310 200 200 | one philosopher dies | + |
 | ./philo 4 500 200 1.2 | invalid argument | + |
-| ./philo 4 0 200 200 | invalid argument | - |
+| ./philo 4 0 200 200 | invalid argument | + |
 | ./philo 4 -500 200 200 | invalid argument | + |
 | ./philo 4 500 200 2147483647 | one philosopher dies after 500 ms | + |
 | ./philo 4 2147483647 200 200 | nobody dies | + |
