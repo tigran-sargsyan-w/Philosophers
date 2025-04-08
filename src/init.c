@@ -6,36 +6,21 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:07:01 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/08 12:24:29 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:45:50 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	init_rules(int argc, char **argv, t_vars *vars)
+static void	check_args_range(int argc, t_vars *vars)
 {
 	t_rules	*rules;
 
 	rules = &vars->rules;
-	if (argc != 5 && argc != 6)
-		cleanup_and_error_exit(vars, "invalid argument count");
-	if (try_parse_int(argv[1], &rules->philo_count) != SUCCESS)
-		cleanup_and_error_exit(vars, "invalid value: number_of_philosophers");
-	if (try_parse_int(argv[2], &rules->time_to_die) != SUCCESS)
-		cleanup_and_error_exit(vars, "invalid value: time_to_die");
-	if (try_parse_int(argv[3], &rules->time_to_eat) != SUCCESS)
-		cleanup_and_error_exit(vars, "invalid value: time_to_eat");
-	if (try_parse_int(argv[4], &rules->time_to_sleep) != SUCCESS)
-		cleanup_and_error_exit(vars, "invalid value: time_to_sleep");
-	rules->must_eat_count = -1;
-	if (argc == 6)
-	{
-		if (try_parse_int(argv[5], &rules->must_eat_count) != SUCCESS)
-			cleanup_and_error_exit(vars,
-				"invalid value: number_of_times_each_philosopher_must_eat");
-	}
 	if (rules->philo_count == 0 || rules->philo_count > 200)
 		cleanup_and_error_exit(vars, "invalid range of philosophers (1-200)");
+	if (rules->time_to_die == 0)
+		cleanup_and_error_exit(vars, "invalid range: time_to_die must be > 0");
 	if (rules->time_to_eat == 0)
 		cleanup_and_error_exit(vars, "invalid range: time_to_eat must be > 0");
 	if (rules->time_to_sleep == 0)
@@ -44,6 +29,30 @@ void	init_rules(int argc, char **argv, t_vars *vars)
 	if (argc == 6 && rules->must_eat_count == 0)
 		cleanup_and_error_exit(vars,
 			"invalid range: must_eat_count must be > 0");
+}
+
+void	init_rules(int argc, char **argv, t_vars *vars)
+{
+	t_rules	*rules;
+
+	rules = &vars->rules;
+	if (argc != 5 && argc != 6)
+		cleanup_and_error_exit(vars, "invalid argument count");
+	if (try_parse_int(argv[1], &rules->philo_count) == ERROR)
+		cleanup_and_error_exit(vars, "invalid value: number_of_philosophers");
+	if (try_parse_int(argv[2], &rules->time_to_die) == ERROR)
+		cleanup_and_error_exit(vars, "invalid value: time_to_die");
+	if (try_parse_int(argv[3], &rules->time_to_eat) == ERROR)
+		cleanup_and_error_exit(vars, "invalid value: time_to_eat");
+	if (try_parse_int(argv[4], &rules->time_to_sleep) == ERROR)
+		cleanup_and_error_exit(vars, "invalid value: time_to_sleep");
+	rules->must_eat_count = -1;
+	if (argc == 6)
+	{
+		if (try_parse_int(argv[5], &rules->must_eat_count) == ERROR)
+			cleanup_and_error_exit(vars, "invalid value: must_eat_count");
+	}
+	check_args_range(argc, vars);
 }
 
 void	init_mutexes(t_vars *vars)
@@ -81,15 +90,10 @@ void	init_philosophers(t_vars *vars)
 		vars->philos[i].last_meal = 0;
 		vars->philos[i].thread = 0;
 		vars->philos[i].left_fork = &vars->forks[i];
-		if (vars->rules.philo_count == 1)
-		{
-			vars->philos[i].right_fork = NULL;
-		}
-		else
-		{
+		vars->philos[i].right_fork = NULL;
+		if (vars->rules.philo_count > 1)
 			vars->philos[i].right_fork = &vars->forks[(i + 1)
 				% vars->rules.philo_count];
-		}
 		vars->philos[i].vars = vars;
 		i++;
 	}

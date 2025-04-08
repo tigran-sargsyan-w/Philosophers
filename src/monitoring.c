@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 19:18:40 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/06 15:43:21 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:55:01 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	*monitor_routine(void *arg)
 			{
 				set_simulation_end(vars);
 				log_action(philo, "died");
+				cleanup_and_exit(vars);
 				return (NULL);
 			}
 			if (vars->rules.must_eat_count > 0
@@ -65,9 +66,11 @@ void	*monitor_routine(void *arg)
 				vars->rules.must_eat_count);
 			pthread_mutex_unlock(&vars->print_lock);
 			set_simulation_end(vars);
+			cleanup_and_exit(vars);
 			return (NULL);
 		}
 		usleep(500);
 	}
+	cleanup_and_exit(vars);
 	return (NULL);
 }
