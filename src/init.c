@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:07:01 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/06 18:58:57 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/08 12:24:29 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,10 @@ void	init_rules(int argc, char **argv, t_vars *vars)
 		cleanup_and_error_exit(vars, "invalid argument count");
 	if (try_parse_int(argv[1], &rules->philo_count) != SUCCESS)
 		cleanup_and_error_exit(vars, "invalid value: number_of_philosophers");
-	if (rules->philo_count == 0 || rules->philo_count > 200)
-		cleanup_and_error_exit(vars, "invalid range of philosophers (1-200)");
 	if (try_parse_int(argv[2], &rules->time_to_die) != SUCCESS)
 		cleanup_and_error_exit(vars, "invalid value: time_to_die");
 	if (try_parse_int(argv[3], &rules->time_to_eat) != SUCCESS)
 		cleanup_and_error_exit(vars, "invalid value: time_to_eat");
-	if (rules->time_to_eat == 0)
-		cleanup_and_error_exit(vars, "invalid range: time_to_eat must be > 0");
 	if (try_parse_int(argv[4], &rules->time_to_sleep) != SUCCESS)
 		cleanup_and_error_exit(vars, "invalid value: time_to_sleep");
 	rules->must_eat_count = -1;
@@ -38,6 +34,16 @@ void	init_rules(int argc, char **argv, t_vars *vars)
 			cleanup_and_error_exit(vars,
 				"invalid value: number_of_times_each_philosopher_must_eat");
 	}
+	if (rules->philo_count == 0 || rules->philo_count > 200)
+		cleanup_and_error_exit(vars, "invalid range of philosophers (1-200)");
+	if (rules->time_to_eat == 0)
+		cleanup_and_error_exit(vars, "invalid range: time_to_eat must be > 0");
+	if (rules->time_to_sleep == 0)
+		cleanup_and_error_exit(vars,
+			"invalid range: time_to_sleep must be > 0");
+	if (argc == 6 && rules->must_eat_count == 0)
+		cleanup_and_error_exit(vars,
+			"invalid range: must_eat_count must be > 0");
 }
 
 void	init_mutexes(t_vars *vars)
