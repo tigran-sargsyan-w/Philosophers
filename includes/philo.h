@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:33:00 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/03 16:06:12 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/09 12:47:23 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,12 @@ void					init_all(t_vars *vars, int argc, char **argv);
 void					cleanup_and_exit(t_vars *vars);
 void					cleanup_and_error_exit(t_vars *vars, char *msg);
 long					get_time_in_ms(void);
+void					*philo_routine(void *arg);
 void					*monitor_routine(void *arg);
-void					log_action(t_philo *philo, const char *msg);
+void					start_simulation(t_vars *vars);
+void					set_simulation_end(t_vars *vars);
 int						is_simulation_ended(t_vars *vars);
+void					log_action(t_philo *philo, const char *msg);
 void					smart_sleep(long duration, t_vars *vars);
 
 #endif

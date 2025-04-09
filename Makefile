@@ -26,6 +26,8 @@ SRCS        = $(SRC_DIR)/main.c \
 			$(SRC_DIR)/init.c \
 			$(SRC_DIR)/monitoring.c \
 			$(SRC_DIR)/parsing.c \
+			$(SRC_DIR)/philo.c \
+			$(SRC_DIR)/simulation.c \
 			$(SRC_DIR)/time.c
 
 # -------------------------------

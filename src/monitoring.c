@@ -6,18 +6,11 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 19:18:40 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/08 19:39:37 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/09 12:49:12 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static void	set_simulation_end(t_vars *vars)
-{
-	pthread_mutex_lock(&vars->simulation_lock);
-	vars->simulation_end = 1;
-	pthread_mutex_unlock(&vars->simulation_lock);
-}
 
 static void	handle_all_philos_satisfied(t_vars *vars)
 {
@@ -26,16 +19,6 @@ static void	handle_all_philos_satisfied(t_vars *vars)
 	pthread_mutex_unlock(&vars->print_lock);
 	set_simulation_end(vars);
 	cleanup_and_exit(vars);
-}
-
-int	is_simulation_ended(t_vars *vars)
-{
-	int	end;
-
-	pthread_mutex_lock(&vars->simulation_lock);
-	end = vars->simulation_end;
-	pthread_mutex_unlock(&vars->simulation_lock);
-	return (end);
 }
 
 static int	check_if_any_philo_died(t_vars *vars)
