@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 12:31:19 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/03/28 20:13:26 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/12 21:07:37 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	print_error(const char *msg)
 
 void	free_all_resources(t_vars *vars)
 {
-	(void)vars;
+	free(vars->philos);
+	free(vars->forks);
 }
 
 void	cleanup_and_error_exit(t_vars *vars, char *msg)
