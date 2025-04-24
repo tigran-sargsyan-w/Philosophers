@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 12:44:08 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/12 20:56:38 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/24 23:26:10 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ int	try_eat(t_philo *philo)
 	if (is_simulation_ended(philo->vars))
 		return (ERROR);
 	log_action(philo, "is eating");
+	pthread_mutex_lock(&philo->vars->simulation_lock);
 	philo->last_meal = get_time_in_ms();
 	philo->meals_eaten++;
+	pthread_mutex_unlock(&philo->vars->simulation_lock);
 	smart_sleep(philo->vars->rules.time_to_eat, philo->vars);
 	if (is_simulation_ended(philo->vars))
 		return (ERROR);

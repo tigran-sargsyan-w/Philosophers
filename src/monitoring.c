@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 19:18:40 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/24 19:40:02 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/24 23:43:05 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ static int	check_if_any_philo_died(t_vars *vars)
 	while (i < vars->rules.philo_count)
 	{
 		philo = &vars->philos[i];
+		pthread_mutex_lock(&philo->vars->simulation_lock);
 		time_since_last_meal = get_time_in_ms() - philo->last_meal;
+		pthread_mutex_unlock(&philo->vars->simulation_lock);
 		if (time_since_last_meal > vars->rules.time_to_die)
 		{
 			set_simulation_end(vars);
@@ -55,8 +57,10 @@ static int	check_if_all_philos_ate_enough(t_vars *vars)
 	while (i < vars->rules.philo_count)
 	{
 		philo = &vars->philos[i];
+		pthread_mutex_lock(&philo->vars->simulation_lock);
 		if (philo->meals_eaten >= vars->rules.must_eat_count)
 			count++;
+		pthread_mutex_unlock(&philo->vars->simulation_lock);
 		i++;
 	}
 	if (count == vars->rules.philo_count)
