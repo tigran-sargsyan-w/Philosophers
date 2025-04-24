@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 19:18:40 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/09 12:49:12 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:36:02 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ void	*monitor_routine(void *arg)
 	while (!is_simulation_ended(vars))
 	{
 		if (check_if_any_philo_died(vars))
-			return (NULL);
+			break ;
 		if (check_if_all_philos_ate_enough(vars))
-			return (NULL);
+			break ;
 		usleep(500);
 	}
 	cleanup_and_exit(vars);

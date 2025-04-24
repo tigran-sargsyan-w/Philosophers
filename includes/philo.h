@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 12:33:00 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/09 12:47:23 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:49:58 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_vars
 	long				start_time;
 	int					simulation_end;
 
+	pthread_t			monitor;
 	pthread_mutex_t		*forks;
 	pthread_mutex_t		print_lock;
 	pthread_mutex_t		simulation_lock;

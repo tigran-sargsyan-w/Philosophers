@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 12:31:19 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/12 21:07:37 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:42:41 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,15 @@ void	print_error(const char *msg)
 
 void	free_all_resources(t_vars *vars)
 {
+	int	i;
+
+	i = 0;
+	while (i < vars->rules.philo_count)
+	{
+		pthread_join(vars->philos[i].thread, NULL);
+		i++;
+	}
+	pthread_join(vars->monitor, NULL);
 	free(vars->philos);
 	free(vars->forks);
 }
