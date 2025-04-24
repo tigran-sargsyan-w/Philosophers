@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 19:18:40 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/24 17:36:02 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:40:02 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void	handle_all_philos_satisfied(t_vars *vars)
 	printf("Each philosopher ate %d time(s)\n", vars->rules.must_eat_count);
 	pthread_mutex_unlock(&vars->print_lock);
 	set_simulation_end(vars);
-	cleanup_and_exit(vars);
 }
 
 static int	check_if_any_philo_died(t_vars *vars)
@@ -36,7 +35,6 @@ static int	check_if_any_philo_died(t_vars *vars)
 		{
 			set_simulation_end(vars);
 			log_action(philo, "died");
-			cleanup_and_exit(vars);
 			return (1);
 		}
 		i++;
@@ -82,6 +80,5 @@ void	*monitor_routine(void *arg)
 			break ;
 		usleep(500);
 	}
-	cleanup_and_exit(vars);
 	return (NULL);
 }
