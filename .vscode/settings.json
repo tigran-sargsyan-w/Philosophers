@@ -5,8 +5,6 @@
             "binaryPath": "/usr/bin/valgrind",
             "binaryArgs": [
                 "--leak-check=full",
-                "--show-leak-kinds=all",
-                "--track-origins=yes",
                 "${workspaceFolder}/philo",
                 "5",
                 "200",
