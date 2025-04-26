@@ -6,12 +6,17 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 22:28:17 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/26 22:36:46 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/27 00:16:08 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/**
+ * @brief Sorts the forks to ensure a consistent order.
+ * @param first The first fork.
+ * @param second The second fork.
+ */
 void	sort_forks(pthread_mutex_t **first, pthread_mutex_t **second)
 {
 	pthread_mutex_t	*tmp;
@@ -24,6 +29,13 @@ void	sort_forks(pthread_mutex_t **first, pthread_mutex_t **second)
 	}
 }
 
+/**
+ * @brief Locks the first fork and checks for simulation end.
+ * @param philo The philosopher structure.
+ * @param first The first fork.
+ * @param second The second fork.
+ * @return SUCCESS or ERROR.
+ */
 int	lock_first_fork(t_philo *philo,
 							pthread_mutex_t **first,
 							pthread_mutex_t **second)
@@ -48,6 +60,13 @@ int	lock_first_fork(t_philo *philo,
 	return (SUCCESS);
 }
 
+/**
+ * @brief Locks the second fork and checks for simulation end.
+ * @param philo The philosopher structure.
+ * @param first The first fork.
+ * @param second The second fork.
+ * @return SUCCESS or ERROR.
+ */
 int	lock_second_fork(t_philo *philo,
 							pthread_mutex_t *first,
 							pthread_mutex_t *second)
