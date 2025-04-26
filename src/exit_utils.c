@@ -6,12 +6,16 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 12:31:19 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/26 21:42:06 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/27 00:06:41 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/**
+ * @brief Prints an error message to stderr.
+ * @param msg The error message to print.
+ */
 static void	print_error(const char *msg)
 {
 	if (!msg)
@@ -22,6 +26,10 @@ static void	print_error(const char *msg)
 	write(2, "\n", 1);
 }
 
+/**
+ * @brief Destroys all mutexes used in the simulation.
+ * @param vars The simulation variables structure.
+ */
 static void	destroy_mutexes(t_vars *vars)
 {
 	int	i;
@@ -41,6 +49,10 @@ static void	destroy_mutexes(t_vars *vars)
 	}
 }
 
+/**
+ * @brief Frees all allocated resources in the simulation.
+ * @param vars The simulation variables structure.
+ */
 static void	free_all_resources(t_vars *vars)
 {
 	if (!vars)
@@ -51,6 +63,11 @@ static void	free_all_resources(t_vars *vars)
 		free(vars->philos);
 }
 
+/**
+ * @brief Cleans up resources and exits the program with an error message.
+ * @param vars The simulation variables structure.
+ * @param msg The error message to print.
+ */
 void	cleanup_and_error_exit(t_vars *vars, char *msg)
 {
 	destroy_mutexes(vars);
@@ -59,6 +76,10 @@ void	cleanup_and_error_exit(t_vars *vars, char *msg)
 	exit(EXIT_FAILURE);
 }
 
+/**
+ * @brief Cleans up resources and exits the program successfully.
+ * @param vars The simulation variables structure.
+ */
 void	cleanup_and_exit(t_vars *vars)
 {
 	destroy_mutexes(vars);
