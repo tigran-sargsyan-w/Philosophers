@@ -6,12 +6,17 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 12:44:08 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/26 22:39:52 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/27 00:17:59 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/**
+ * @brief Tries to take forks for the philosopher.
+ * @param philo The philosopher structure.
+ * @return SUCCESS or ERROR.
+ */
 static int	try_take_forks(t_philo *philo)
 {
 	pthread_mutex_t	*first;
@@ -24,6 +29,11 @@ static int	try_take_forks(t_philo *philo)
 	return (lock_second_fork(philo, first, second));
 }
 
+/**
+ * @brief Tries to eat for the philosopher.
+ * @param philo The philosopher structure.
+ * @return SUCCESS or ERROR.
+ */
 static int	try_eat(t_philo *philo)
 {
 	if (is_simulation_ended(philo->vars))
@@ -39,6 +49,10 @@ static int	try_eat(t_philo *philo)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Drops the forks held by the philosopher.
+ * @param philo The philosopher structure.
+ */
 static void	drop_forks(t_philo *philo)
 {
 	pthread_mutex_t	*first;
@@ -53,6 +67,11 @@ static void	drop_forks(t_philo *philo)
 		pthread_mutex_unlock(first);
 }
 
+/**
+ * @brief Tries to sleep and think for the philosopher.
+ * @param philo The philosopher structure.
+ * @return SUCCESS or ERROR.
+ */
 static int	try_sleep_think(t_philo *philo)
 {
 	if (is_simulation_ended(philo->vars))
@@ -65,6 +84,11 @@ static int	try_sleep_think(t_philo *philo)
 	return (SUCCESS);
 }
 
+/**
+ * @brief The main routine for each philosopher thread.
+ * @param arg The philosopher structure.
+ * @return NULL.
+ */
 void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
