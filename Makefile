@@ -31,11 +31,6 @@ SRCS        = $(SRC_DIR)/main.c \
 			$(SRC_DIR)/utils.c
 
 # -------------------------------
-#   Header Files
-# -------------------------------
-HEADERS     = $(INC_DIR)/philo.h
-
-# -------------------------------
 #   Object & Dependency Files
 # -------------------------------
 OBJS        = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
@@ -58,7 +53,7 @@ bonus: all
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS) | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	@$(CC) $(C_FLAGS) $(INC_FLAGS) -MMD -MP -c $< -o $@
 
 clean:
