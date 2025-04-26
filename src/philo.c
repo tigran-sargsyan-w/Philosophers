@@ -6,38 +6,73 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 12:44:08 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/24 23:26:10 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/26 18:02:39 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	try_take_forks(t_philo *philo)
+void	sort_forks(pthread_mutex_t **first, pthread_mutex_t **second)
 {
+	pthread_mutex_t	*tmp;
+
+	if (*second && *first > *second)
+	{
+		tmp = *first;
+		*first = *second;
+		*second = tmp;
+	}
+}
+
+static int	lock_first_fork(t_philo *philo,
+							pthread_mutex_t **first,
+							pthread_mutex_t **second)
+{
+	sort_forks(first, second);
 	if (is_simulation_ended(philo->vars))
 		return (ERROR);
-	pthread_mutex_lock(philo->left_fork);
+	pthread_mutex_lock(*first);
 	if (is_simulation_ended(philo->vars))
 	{
-		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(*first);
 		return (ERROR);
 	}
 	log_action(philo, "has taken a fork");
-	if (!philo->right_fork)
+	if (!*second)
 	{
-		smart_sleep(philo->vars->rules.time_to_die, philo->vars);
-		pthread_mutex_unlock(philo->left_fork);
+		smart_sleep(philo->vars->rules.time_to_die,
+			philo->vars);
+		pthread_mutex_unlock(*first);
 		return (ERROR);
 	}
-	pthread_mutex_lock(philo->right_fork);
+	return (SUCCESS);
+}
+
+static int	lock_second_fork(t_philo *philo,
+							pthread_mutex_t *first,
+							pthread_mutex_t *second)
+{
+	pthread_mutex_lock(second);
 	if (is_simulation_ended(philo->vars))
 	{
-		pthread_mutex_unlock(philo->left_fork);
-		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(second);
+		pthread_mutex_unlock(first);
 		return (ERROR);
 	}
 	log_action(philo, "has taken a fork");
 	return (SUCCESS);
+}
+
+int	try_take_forks(t_philo *philo)
+{
+	pthread_mutex_t	*first;
+	pthread_mutex_t	*second;
+
+	first = philo->left_fork;
+	second = philo->right_fork;
+	if (lock_first_fork(philo, &first, &second) == ERROR)
+		return (ERROR);
+	return (lock_second_fork(philo, first, second));
 }
 
 int	try_eat(t_philo *philo)
@@ -57,10 +92,16 @@ int	try_eat(t_philo *philo)
 
 void	drop_forks(t_philo *philo)
 {
-	if (philo->left_fork)
-		pthread_mutex_unlock(philo->left_fork);
-	if (philo->right_fork)
-		pthread_mutex_unlock(philo->right_fork);
+	pthread_mutex_t	*first;
+	pthread_mutex_t	*second;
+
+	first = philo->left_fork;
+	second = philo->right_fork;
+	sort_forks(&first, &second);
+	if (second)
+		pthread_mutex_unlock(second);
+	if (first)
+		pthread_mutex_unlock(first);
 }
 
 int	try_sleep_think(t_philo *philo)
