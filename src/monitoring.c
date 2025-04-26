@@ -6,12 +6,17 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 19:18:40 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/24 23:43:05 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/27 00:14:39 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/**
+ * @brief Handles the case when all philosophers have eaten 
+ * the required number of meals.
+ * @param vars The simulation variables structure.
+ */
 static void	handle_all_philos_satisfied(t_vars *vars)
 {
 	pthread_mutex_lock(&vars->print_lock);
@@ -20,6 +25,11 @@ static void	handle_all_philos_satisfied(t_vars *vars)
 	set_simulation_end(vars);
 }
 
+/**
+ * @brief Checks if any philosopher has died.
+ * @param vars The simulation variables structure.
+ * @return 1 if a philosopher has died, 0 otherwise.
+ */
 static int	check_if_any_philo_died(t_vars *vars)
 {
 	int		i;
@@ -44,6 +54,11 @@ static int	check_if_any_philo_died(t_vars *vars)
 	return (0);
 }
 
+/**
+ * @brief Checks if all philosophers have eaten the required number of meals.
+ * @param vars The simulation variables structure.
+ * @return 1 if all philosophers have eaten enough, 0 otherwise.
+ */
 static int	check_if_all_philos_ate_enough(t_vars *vars)
 {
 	int		i;
@@ -71,6 +86,11 @@ static int	check_if_all_philos_ate_enough(t_vars *vars)
 	return (0);
 }
 
+/**
+ * @brief Monitors the simulation and checks for conditions to end it.
+ * @param arg The simulation variables structure.
+ * @return NULL.
+ */
 void	*monitor_routine(void *arg)
 {
 	t_vars	*vars;
