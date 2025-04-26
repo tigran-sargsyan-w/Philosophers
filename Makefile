@@ -15,7 +15,7 @@ INC_FLAGS   = -I$(INC_DIR)
 #   Directories
 # -------------------------------
 SRC_DIR     = src
-INC_DIR     = includes
+INC_DIR     = include
 OBJ_DIR     = obj
 
 # -------------------------------
