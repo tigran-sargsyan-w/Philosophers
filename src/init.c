@@ -6,7 +6,7 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:07:01 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/08 14:45:50 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/26 21:31:54 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	check_args_range(int argc, t_vars *vars)
 			"invalid range: must_eat_count must be > 0");
 }
 
-void	init_rules(int argc, char **argv, t_vars *vars)
+static void	init_rules(int argc, char **argv, t_vars *vars)
 {
 	t_rules	*rules;
 
@@ -55,7 +55,7 @@ void	init_rules(int argc, char **argv, t_vars *vars)
 	check_args_range(argc, vars);
 }
 
-void	init_mutexes(t_vars *vars)
+static void	init_mutexes(t_vars *vars)
 {
 	int	i;
 
@@ -75,7 +75,7 @@ void	init_mutexes(t_vars *vars)
 		cleanup_and_error_exit(vars, "pthread_mutex_init: simulation_lock");
 }
 
-void	init_philosophers(t_vars *vars)
+static void	init_philosophers(t_vars *vars)
 {
 	int	i;
 
