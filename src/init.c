@@ -6,12 +6,17 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 16:07:01 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/26 21:31:54 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/27 00:09:26 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/**
+ * @brief Checks if arguments are within valid ranges.
+ * @param argc The number of arguments.
+ * @param vars The simulation variables structure.
+ */
 static void	check_args_range(int argc, t_vars *vars)
 {
 	t_rules	*rules;
@@ -31,6 +36,12 @@ static void	check_args_range(int argc, t_vars *vars)
 			"invalid range: must_eat_count must be > 0");
 }
 
+/**
+ * @brief Initializes the rules structure based on command line arguments.
+ * @param argc The number of arguments.
+ * @param argv The command line arguments.
+ * @param vars The simulation variables structure.
+ */
 static void	init_rules(int argc, char **argv, t_vars *vars)
 {
 	t_rules	*rules;
@@ -55,6 +66,10 @@ static void	init_rules(int argc, char **argv, t_vars *vars)
 	check_args_range(argc, vars);
 }
 
+/**
+ * @brief Initializes mutexes for forks and other synchronization primitives.
+ * @param vars The simulation variables structure.
+ */
 static void	init_mutexes(t_vars *vars)
 {
 	int	i;
@@ -75,6 +90,10 @@ static void	init_mutexes(t_vars *vars)
 		cleanup_and_error_exit(vars, "pthread_mutex_init: simulation_lock");
 }
 
+/**
+ * @brief Initializes the philosophers' data structures.
+ * @param vars The simulation variables structure.
+ */
 static void	init_philosophers(t_vars *vars)
 {
 	int	i;
@@ -99,6 +118,12 @@ static void	init_philosophers(t_vars *vars)
 	}
 }
 
+/**
+ * @brief Initializes all components of the simulation.
+ * @param vars The simulation variables structure.
+ * @param argc The number of arguments.
+ * @param argv The command line arguments.
+ */
 void	init_all(t_vars *vars, int argc, char **argv)
 {
 	vars->forks = NULL;
