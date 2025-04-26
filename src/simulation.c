@@ -6,12 +6,16 @@
 /*   By: tsargsya <tsargsya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 12:41:48 by tsargsya          #+#    #+#             */
-/*   Updated: 2025/04/24 17:44:42 by tsargsya         ###   ########.fr       */
+/*   Updated: 2025/04/27 00:19:45 by tsargsya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/**
+ * @brief Sets the simulation end flag to 1.
+ * @param vars The variables structure.
+ */
 void	set_simulation_end(t_vars *vars)
 {
 	pthread_mutex_lock(&vars->simulation_lock);
@@ -19,6 +23,11 @@ void	set_simulation_end(t_vars *vars)
 	pthread_mutex_unlock(&vars->simulation_lock);
 }
 
+/**
+ * @brief Checks if the simulation has ended.
+ * @param vars The variables structure.
+ * @return 1 if the simulation has ended, 0 otherwise.
+ */
 int	is_simulation_ended(t_vars *vars)
 {
 	int	end;
@@ -29,6 +38,10 @@ int	is_simulation_ended(t_vars *vars)
 	return (end);
 }
 
+/**
+ * @brief Starts the simulation.
+ * @param vars The variables structure.
+ */
 void	start_simulation(t_vars *vars)
 {
 	int			i;
