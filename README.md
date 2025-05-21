@@ -22,6 +22,8 @@
 
 The **Philosophers** project is a simulation of a classic synchronization problem. A group of philosophers sits at a table with a fork between each pair. Each philosopher must alternately think and eat. They must use the two forks closest to them to eat, and the simulation must avoid deadlocks and race conditions.
 
+![Philosophers problem](https://files.codingninjas.in/article_images/dining-philosopher-problem-using-semaphores-1-1643507259.webp)
+
 ## Features
 
 - **Multithreaded Simulation** using `pthread` library.
