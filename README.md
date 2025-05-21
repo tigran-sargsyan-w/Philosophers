@@ -22,7 +22,7 @@
 
 The **Philosophers** project is a simulation of a classic synchronization problem. A group of philosophers sits at a table with a fork between each pair. Each philosopher must alternately think and eat. They must use the two forks closest to them to eat, and the simulation must avoid deadlocks and race conditions.
 
-![Philosophers problem](https://ibb.co/yFys2J3S)
+![Philosophers problem](https://i.ibb.co/LdtpKfG5/image.png)
 
 ## Features
 
