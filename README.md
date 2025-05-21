@@ -91,6 +91,7 @@ Optional last argument stops the simulation after all philosophers have eaten th
 4. **Clean Exit:**  
    When the simulation ends, all threads and mutexes are properly destroyed.
 
+
 ## Tests
 
 The following test cases were used to validate the correctness, robustness, and memory safety of the simulation:
@@ -116,6 +117,22 @@ The following test cases were used to validate the correctness, robustness, and 
 | `valgrind --tool=drd --error-exitcode=1 ./philo 5 800 200 200 2`      | Each philosopher eats 2 times                                         | ✅ |
 | `valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./philo 5 200 300 400 5` | One philosopher dies                                   | ✅ |
 | `valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./philo 5 800 200 200 2` | Each philosopher eats 2 times                          | ✅ |
+
+
+## 🧪 Edge Case
+
+```
+./philo 3 1000 330 330
+```
+
+This test is a borderline case where only one philosopher can eat at a time (odd number of philosophers and shared forks).  
+The sum of `time_to_eat + time_to_sleep` is 660 ms, leaving very little buffer before reaching `time_to_die = 1000 ms`.
+
+Any slight delay in thread scheduling or `usleep` inaccuracy may cause one philosopher to starve unexpectedly.  
+This case highlights the importance of precise timing and fairness in concurrent systems.
+
+> 📌 **Note:** I discovered this edge case after completing the project, so it remains **unresolved** in the final implementation.
+
 
 ## Troubleshooting
 
